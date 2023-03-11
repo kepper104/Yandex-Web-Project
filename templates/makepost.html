@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block content %}
+<div id="make-post">
+    <strong><h1>Post a new Contraption</h1></strong>
+
+    <form class="post_form" method="post">
+
+<!--        Name-->
+        <h4>Name Your contraption</h4>
+        <input type="text" id="name" class="form-control" name="Contraption name" placeholder=""> <br>
+
+<!--        Description-->
+        <h4>Provide a description for Your contraption</h4>
+        <textarea class="form-control" id="about" rows="3" name="about"></textarea>
+
+        <!--Category selection-->
+        <h4>Select contraption category</h4>
+        <select class="form-control" id="classSelect" name="edu" >
+            <option selected="selected">Not chosen</option>
+            <option>Farm</option>
+            <option>Door</option>
+            <option>Trap</option>
+            <option>Miscellaneous</option>
+        </select>
+
+
+<!--    Text Tutorial-->
+        <h4>Optionally, add a text tutorial</h4>
+        <textarea class="form-control" id="text-tutorial" rows="3" name="about" placeholder=""></textarea>
+
+
+<!--    Video Link-->
+        <h4>Optionally, link a YouTube video with a tutorial </h4>
+        <input type="text" id="youtube-link" class="form-control" name="Youtube link" placeholder="">
+
+<!--    Screenshots upload-->
+        <h4>Upload screenshots</h4>
+        <input type="file" class="form-control-file" id="photo" name="file">
+
+<!--    Post button-->
+        <button style="margin: 10px" type="submit" class="btn btn-primary">Post</button>
+    </form>
+
+</div>
+{% endblock %}

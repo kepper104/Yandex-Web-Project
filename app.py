@@ -51,5 +51,10 @@ def post(post_id):
     return render_template('post.html')
 
 
+@app.route('/make_post')
+def make_post():
+    return render_template('makepost.html')
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
