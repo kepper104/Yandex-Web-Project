@@ -3,12 +3,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo
 
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
+# from flask_sqlalchemy import SQLAlchemy
+# from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'example_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql:////'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql:////'
 
 
 class LoginForm(FlaskForm):
@@ -45,6 +45,10 @@ def signup():
         return "<h1>" + form.username.data + " " + form.password_1.data + " " + form.password_2.data + "</h1>"
         # return redirect('/success')
     return render_template('signup.html', form=form)
+
+@app.route('/post/<post_id>')
+def post(post_id):
+    return render_template('post.html')
 
 
 if __name__ == '__main__':

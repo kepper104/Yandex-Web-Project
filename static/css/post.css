@@ -1,0 +1,86 @@
+div.post
+{
+ background-color: #f1f1f1;
+ box-shadow: 0 0 5px #ccc;
+ margin: 20px;
+ padding: 50px;
+ text-align: center;
+    font-size: 20pt;
+}
+
+div.post body {
+font-family: Arial, sans-serif;
+background-color: #f2f2f2;
+}
+
+div.post h1,
+div.post h2,
+div.post h3 {
+text-align: center;
+color: #008080;
+}
+
+div.post img {
+display: block;
+margin: 0 auto;
+max-width: 100%;
+height: auto;
+}
+
+div.post p {
+text-align: justify;
+margin: 10px;
+}
+
+div.post form {
+text-align: center;
+}
+
+div.post input[type="submit"] {
+background-color: #008080;
+color: #fff;
+border: none;
+padding: 8px 16px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+div.post input[type="submit"]:hover {
+background-color: #006666;
+}
+
+div.post ul {
+list-style: none;
+margin: 0;
+padding: 0;
+}
+
+.post li {
+margin-bottom: 10px;
+}
+
+iframe {
+display: block;
+margin: 0 auto;
+}
+
+.like-dislike {
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 20px;
+}
+
+.like, .dislike {
+font-size: 20px;
+margin: 0 10px;
+cursor: pointer;
+}
+
+.like:hover, .dislike:hover {
+color: #008080;
+}
+
+.like.active, .dislike.active {
+color: #008080;
+}
