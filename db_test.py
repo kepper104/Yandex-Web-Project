@@ -1,16 +1,13 @@
-from getpass import getpass
+from config import db_user, db_password
 from mysql.connector import connect, Error
 
-try:
-    with connect(
-        host="localhost",
-        user=input("Enter username: "),
-        password=getpass("Enter password: "),
-    ) as connection:
-        print(connection)
-        create_db_query = "CREATE DATABASE online_movie_rating"
-        with connection.cursor() as cursor:
-            cursor.execute(create_db_query)
 
-except Error as e:
-    print(e)
+connection = connect(host="localhost", user=db_user, password=db_password)
+cur = connection.cursor()
+print(connection, cur)
+create_db_query = "SHOW DATABASES"
+
+cur.execute(create_db_query)
+for i in cur:
+    print(i)
+
