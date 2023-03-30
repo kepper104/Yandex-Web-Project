@@ -8,18 +8,18 @@
         <h1 align="center">Sign in</h1>
         <p>
             {{ form.username.label }}<br>
-            {{ form.username(class="form-control") }}<br>
+            {{ form.username(class="form-control") }}
             {% for error in form.username.errors %}
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger" role="alert"  style="padding: 10px">
                     {{ error }}
                 </div>
             {% endfor %}
         </p>
         <p>
             {{ form.password.label }}<br>
-            {{ form.password(class="form-control", type="password") }}<br>
+            {{ form.password(class="form-control", type="password") }}
             {% for error in form.password.errors %}
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger" role="alert" style="padding: 10px">
                     {{ error }}
                 </div>
             {% endfor %}

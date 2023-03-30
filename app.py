@@ -38,6 +38,7 @@ def signin():
         # return redirect('/success')
     return render_template('signin.html', form=form)
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
@@ -46,13 +47,15 @@ def signup():
         # return redirect('/success')
     return render_template('signup.html', form=form)
 
+
 @app.route('/post/<post_id>')
 def post(post_id):
     return render_template('post.html')
 
 
-@app.route('/make_post')
+@app.route('/make_post', methods=['GET', 'POST'])
 def make_post():
+    # if
     return render_template('makepost.html')
 
 

@@ -6,27 +6,29 @@
         <h1 align="center">Sign up</h1>
         <p>
             {{ form.username.label }}<br />
-            {{ form.username(class="form-control") }}<br />
+            {{ form.username(class="form-control") }}
             {% for error in form.username.errors %}
         </p>
 
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert" style="padding: 10px">
             {{ error }}
         </div>
         {% endfor %}
         <p>
             {{ form.password_1.label }}<br />
-            {{ form.password_1(class="form-control", type="password") }}<br />
+            {{ form.password_1(class="form-control", type="password") }}
             {% for error in form.password_1.errors %}
         </p>
 
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert" style="padding: 10px">
             {{ error }}
         </div>
-        {% endfor %} {{ form.password_2.label }}<br />
-        {{ form.password_2(class="form-control", type="password") }}<br />
+        {% endfor %}
+        <p> {{ form.password_2.label }}<br />
+        {{ form.password_2(class="form-control", type="password") }}
         {% for error in form.password_2.errors %}
-        <div class="alert alert-danger" role="alert">
+        </p>
+        <div class="alert alert-danger" role="alert" style="padding: 10px">
             {{ error }}
         </div>
         {% endfor %}

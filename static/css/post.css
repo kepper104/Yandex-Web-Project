@@ -36,7 +36,7 @@ div.post form {
 text-align: center;
 }
 
-div.post input[type="submit"] {
+input[type="submit"], button{
 background-color: #008080;
 color: #fff;
 border: none;
