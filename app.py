@@ -34,7 +34,8 @@ class RegisterForm(FlaskForm):
 @app.route('/')
 @app.route('/index')
 def index():
-
+    posts = cur.execute("SELECT * FROM posts")
+    print(posts)
     return render_template("index.html")
 
 
