@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS posts (
     likes INT,
     text_tutorial TEXT,
     video_tutorial TINYTEXT
+    creation_date DATETIME DEFAULT(CURRENT_TIMESTAMP)
 );
 
 

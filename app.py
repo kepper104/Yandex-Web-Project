@@ -15,8 +15,8 @@ app.config['SECRET_KEY'] = 'example_key'
 connection = connect(host="localhost", user=db_user, password=db_password, database="minecraft_repository")
 cur = connection.cursor()
 print("Connected to DB!")
-cur.execute("SELECT * FROM users")
-print(cur)
+# cur.execute("SELECT * FROM users")
+# print(cur)
 
 class LoginForm(FlaskForm):
     username = StringField('Login', validators=[DataRequired(), Length(min=4, max=20)])
@@ -34,8 +34,10 @@ class RegisterForm(FlaskForm):
 @app.route('/')
 @app.route('/index')
 def index():
-    posts = cur.execute("SELECT * FROM posts")
-    print(posts)
+    cur.execute("SELECT * FROM posts")
+    for i in cur:
+        print(i)
+    # print(posts)
     return render_template("index.html")
 
 
