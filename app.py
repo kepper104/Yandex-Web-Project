@@ -2,14 +2,19 @@ from flask import Flask, render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo
+from mysql.connector import connect, Error
+from config import db_user, db_password
 
-# from flask_sqlalchemy import SQLAlchemy
 # from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'example_key'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql:////'
 
+connection = connect(host="localhost", user=db_user, password=db_password, database="minecraft_repository")
+cur = connection.cursor()
+print("Connected to DB!")
+cur.execute("SELECT * FROM users")
+print(cur)
 
 class LoginForm(FlaskForm):
     username = StringField('Login', validators=[DataRequired(), Length(min=4, max=20)])
@@ -27,6 +32,7 @@ class RegisterForm(FlaskForm):
 @app.route('/')
 @app.route('/index')
 def index():
+
     return render_template("index.html")
 
 
