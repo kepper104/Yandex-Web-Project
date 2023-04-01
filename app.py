@@ -35,9 +35,24 @@ class RegisterForm(FlaskForm):
 @app.route('/index')
 def index():
     cur.execute("SELECT * FROM posts")
+    posts = list()
     for i in cur:
         print(i)
+        posts.append(i)
     # print(posts)
+    # posts = [(2, 'Greatest contraption of all time!', 1, 'I spent 80 years on this', None, None, None)]
+    posts_dict = dict()
+    for i in posts:
+        posts_dict[i[0]] = dict()
+        posts_dict[i[0]]["post_id"] = i[0]
+        posts_dict[i[0]]["title"] = i[1]
+        posts_dict[i[0]]["author_id"] = i[2]
+        posts_dict[i[0]]["description"] = i[3]
+        posts_dict[i[0]]["likes"] = i[4]
+        posts_dict[i[0]]["text_tutorial"] = i[5]
+        posts_dict[i[0]]["video_tutorial"] = i[6]
+    print(posts_dict)
+
     return render_template("index.html")
 
 
