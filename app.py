@@ -29,13 +29,14 @@ class User(flask_login.UserMixin):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Login', validators=[DataRequired(), Length(min=4, max=20)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
+    username = StringField('Login', validators=[DataRequired(), Length(min=4, max=100)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=4, max=100)])
     submit = SubmitField('Log in')
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('Login', validators=[DataRequired(), Length(min=4, max=20)])
+    login = StringField('Login', validators=[DataRequired(), Length(min=4, max=100)])
+    name = StringField('Name', validators=[DataRequired(), Length(min=4, max=100)])
     password_1 = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
     password_2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(min=4), EqualTo("password_1", message="Passwords don't match!")])
     submit = SubmitField('Log in')
@@ -103,10 +104,11 @@ def signin():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
-    if form.validate_on_submit():
-        return "<h1>" + form.username.data + " " + form.password_1.data + " " + form.password_2.data + "</h1>"
-        # return redirect('/success')
-    return render_template('signup.html', form=form)
+    if not form.validate_on_submit():
+        return render_template('signup.html', form=form)
+
+
+    return "<h1>" + form.username.data + " " + form.password_1.data + " " + form.password_2.data + "</h1>"
 
 
 @app.route('/post/<post_id>')
