@@ -1,22 +1,32 @@
 import os
 
-from flask import Flask, render_template, redirect
+import flask
+from flask import Flask, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo
 from mysql.connector import connect, Error
 from config import db_user, db_password
-
-# from werkzeug.security import generate_password_hash, check_password_hash
+import flask_login
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.secret_key = "amogus"
 app.config['SECRET_KEY'] = 'example_key'
+
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
 
 connection = connect(host="localhost", user=db_user, password=db_password, database="minecraft_repository")
 cur = connection.cursor()
 print("Connected to DB!")
 # cur.execute("SELECT * FROM users")
 # print(cur)
+
+
+class User(flask_login.UserMixin):
+    pass
+
 
 class LoginForm(FlaskForm):
     username = StringField('Login', validators=[DataRequired(), Length(min=4, max=20)])
@@ -31,6 +41,31 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Log in')
 
 
+@login_manager.user_loader
+def user_loader(login):
+    res = get_user_id(login)
+
+    if res == -1:
+        return
+
+    user = User()
+    user.id = res
+    return user
+
+
+@login_manager.request_loader
+def request_loader(request):
+
+    res = get_user_id(request.form.username.data)
+
+    if res == -1:  # no user found
+        return
+
+    user = User()
+    user.id = res
+    return user
+
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -42,10 +77,22 @@ def index():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = LoginForm()
-    if form.validate_on_submit():
-        return form.username.data + " " + form.password.data
-        # return redirect('/success')
-    return render_template('signin.html', form=form)
+    if not form.validate_on_submit():
+        print("Showing sign in form")
+        return render_template('signin.html', form=form)
+    print("Trying to log in")
+    user_login = form.username.data
+    user_id = get_user_id(user_login)
+    if user_id == -1:
+        return "Bad login, no user found"
+    if not check_password_hash(get_hashed_user_password(user_id), form.password.data):
+        return "Bad login, password didn't match"
+    user = User()
+    user.id = user_id
+    flask_login.login_user(user)
+    return redirect(url_for("make_post"))
+    # return redirect('/success')
+
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -65,8 +112,22 @@ def post(post_id):
 
 
 @app.route('/make_post', methods=['GET', 'POST'])
+@flask_login.login_required
 def make_post():
     return render_template('makepost.html')
+
+
+@app.route('/logout')
+@flask_login.login_required
+def logout():
+    flask_login.logout_user()
+    print("Logged out!")
+    redirect(url_for("index"))
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized', 401
 
 
 def get_post_data(post_id):
@@ -112,6 +173,25 @@ def get_post_tile_data():
         posts_dict["news"].append(cur_dict)
 
     return posts_dict
+
+
+def get_user_id(user_login):
+    print("Trying to find User Login!")
+    cur.execute("SELECT login FROM users")
+    logins = cur.fetchall()
+    if user_login not in logins:
+        print("No user with such login located!")
+        return -1
+    print("User found! Now searching their ID!")
+    cur.execute(f"SELECT user_id FROM users WHERE login = {user_login}")
+    user_id = cur.fetchall()[0]
+    print(f"{user_login}'s  is", user_id)
+    return user_id
+
+
+def get_hashed_user_password(user_id):
+    cur.execute(f"SELECT password FROM users WHERE user_id = {user_id}")
+    return cur.fetchall()[0]
 
 
 if __name__ == '__main__':
