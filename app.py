@@ -180,6 +180,7 @@ def get_user_id(user_login):
     print("Trying to find User Login!")
     cur.execute("SELECT login FROM users")
     logins = cur.fetchall()
+    print("Logins are:", logins)
     if user_login not in logins:
         print("No user with such login located!")
         return -1
