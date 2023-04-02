@@ -15,7 +15,7 @@
 <!--			<li><a href="/post/1">View Post</a></li>-->
 			{% if current_user.is_authenticated %}
 				<li><a href="/make_post">Make post</a></li>
-				<li style="float:right">Hi, {{ current_user.name }}</li>
+				<li style="float:right">Hi, {{ current_user.get_id() }}</li>
 				<li style="float:right"><a href="/logout">Log Out</a></li>
 			{% else %}
 				<li style="float:right"><a href="/signup">Sign Up</a></li>

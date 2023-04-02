@@ -127,7 +127,7 @@ def make_post():
 def logout():
     flask_login.logout_user()
     print("Logged out!")
-    redirect(url_for("index"))
+    return redirect(url_for("index"))
 
 
 @login_manager.unauthorized_handler
