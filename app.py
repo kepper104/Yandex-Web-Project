@@ -53,17 +53,17 @@ def user_loader(login):
     return user
 
 
-@login_manager.request_loader
-def request_loader(request):
-
-    res = get_user_id(request.form.username.data)
-
-    if res == -1:  # no user found
-        return
-
-    user = User()
-    user.id = res
-    return user
+# @login_manager.request_loader
+# def request_loader(request):
+#
+#     res = get_user_id(request.form.username.data)
+#
+#     if res == -1:  # no user found
+#         return
+#
+#     user = User()
+#     user.id = res
+#     return user
 
 
 @app.route('/')
