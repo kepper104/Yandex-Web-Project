@@ -48,7 +48,7 @@ def index():
         posts_dict[i[0]]["title"] = i[1]
         posts_dict[i[0]]["author_id"] = i[2]
         cur.execute(f"SELECT name FROM users WHERE user_id = {i[2]}")
-        posts_dict[i[0]]["author_name"] = cur.fetchone()
+        posts_dict[i[0]]["author_name"] = cur.fetchone()[0]
 
         posts_dict[i[0]]["description"] = i[3]
         posts_dict[i[0]]["likes"] = i[4]
