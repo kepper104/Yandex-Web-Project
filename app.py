@@ -195,7 +195,7 @@ def get_user_id(user_login):
 
 
 def get_hashed_user_password(user_id):
-    cur.execute(f"SELECT password FROM users WHERE user_id = {user_id};")
+    cur.execute(f"SELECT password FROM users WHERE user_id = '{user_id}';")
     return cur.fetchall()[0]
 
 
