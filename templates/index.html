@@ -3,7 +3,7 @@
     <h2>Browse all builds</h2>
 
     <div class="tiles">
-        {% for tile in posts %}
+        {% for tile in posts['news'] %}
         <a href="/post/{{tile['post_id']}}" class="no_underline">
             <div class="tile">
                 <img src="/static/pictures/build1.png" alt="Build 1" />
