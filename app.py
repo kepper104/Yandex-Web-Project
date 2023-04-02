@@ -180,7 +180,7 @@ def get_post_tile_data():
 
 
 def get_user_id(user_login):
-    print("Trying to find User Login!")
+    print("Trying to find user login", user_login)
     cur.execute("SELECT login FROM users")
     logins = cur.fetchall()
     print("Logins are:", logins)
