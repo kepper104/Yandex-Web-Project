@@ -42,19 +42,22 @@ def index():
     # print(posts)
     # posts = [(2, 'Greatest contraption of all time!', 1, 'I spent 80 years on this', None, None, None)]
     posts_dict = dict()
+    posts_dict["news"] = list()
     for i in posts:
-        posts_dict[i[0]] = dict()
-        posts_dict[i[0]]["post_id"] = i[0]
-        posts_dict[i[0]]["title"] = i[1]
-        posts_dict[i[0]]["author_id"] = i[2]
+        cur_dict = dict()
+        cur_dict["post_id"] = i[0]
+        cur_dict["title"] = i[1]
+        cur_dict["author_id"] = i[2]
         cur.execute(f"SELECT name FROM users WHERE user_id = {i[2]}")
-        posts_dict[i[0]]["author_name"] = cur.fetchone()[0]
+        cur_dict["author_name"] = cur.fetchone()[0]
 
-        posts_dict[i[0]]["description"] = i[3]
-        posts_dict[i[0]]["likes"] = i[4]
-        posts_dict[i[0]]["text_tutorial"] = i[5]
-        posts_dict[i[0]]["video_tutorial"] = i[6]
+        cur_dict["description"] = i[3]
+        cur_dict["likes"] = i[4]
+        cur_dict["text_tutorial"] = i[5]
+        cur_dict["video_tutorial"] = i[6]
+        posts_dict["news"].append(cur_dict)
     print(posts_dict)
+
 
     return render_template("index.html", posts=posts_dict)
 
@@ -91,3 +94,14 @@ def make_post():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+
+{   2:
+     {'post_id': 2,
+     'title': 'Greatest contraption of all time!',
+     'author_id': 1,
+     'author_name': 'Kirill',
+     'description': 'I spent 80 years on this',
+     'likes': None,
+     'text_tutorial': None,
+     'video_tutorial': None}
+ }
