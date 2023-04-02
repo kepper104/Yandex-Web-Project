@@ -3,15 +3,15 @@
     <h2>Browse all builds</h2>
 
     <div class="tiles">
-<!--        {% for tile in news %}-->
-<!--        <a href="/post/{{tile['post_id']}}" class="no_underline">-->
-<!--            <div class="tile">-->
-<!--                <img src="/static/pictures/build1.png" alt="Build 1" />-->
-<!--                <h3>{{tile['title']}}</h3>-->
-<!--                <h5>By {{tile['author']}}</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--        {% endfor %}-->
+        {% for tile in posts %}
+        <a href="/post/{{tile['post_id']}}" class="no_underline">
+            <div class="tile">
+                <img src="/static/pictures/build1.png" alt="Build 1" />
+                <h3>{{tile['title']}}</h3>
+                <h5>By {{tile['author_name']}}</h5>
+            </div>
+        </a>
+        {% endfor %}
 
     </div>
 </main>

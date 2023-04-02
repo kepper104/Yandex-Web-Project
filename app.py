@@ -47,13 +47,16 @@ def index():
         posts_dict[i[0]]["post_id"] = i[0]
         posts_dict[i[0]]["title"] = i[1]
         posts_dict[i[0]]["author_id"] = i[2]
+        cur.execute(f"SELECT name FROM users WHERE user_id = {i[2]}")
+        posts_dict[i[0]]["author_name"] = cur.fetchone()
+
         posts_dict[i[0]]["description"] = i[3]
         posts_dict[i[0]]["likes"] = i[4]
         posts_dict[i[0]]["text_tutorial"] = i[5]
         posts_dict[i[0]]["video_tutorial"] = i[6]
     print(posts_dict)
 
-    return render_template("index.html")
+    return render_template("index.html", posts=posts_dict)
 
 
 @app.route('/signin', methods=['GET', 'POST'])
