@@ -132,13 +132,13 @@ def unauthorized_handler():
 
 
 def get_post_data(post_id):
-    cur.execute(f"SELECT * FROM posts WHERE post_id = {post_id}")
+    cur.execute(f"SELECT * FROM posts WHERE post_id = {post_id};")
     post = cur.fetchall()[0]
 
     params = dict()
     params["title"] = post[1]
 
-    cur.execute(f"SELECT name FROM users WHERE user_id = {post[2]}")
+    cur.execute(f"SELECT name FROM users WHERE user_id = {post[2]};")
     params["author_name"] = cur.fetchone()[0]
 
     params["creation_date"] = post[7]
@@ -150,7 +150,7 @@ def get_post_data(post_id):
 
 
 def get_post_tile_data():
-    cur.execute("SELECT * FROM posts")
+    cur.execute("SELECT * FROM posts;")
     posts = list()
     for i in cur:
         print(i)
@@ -164,7 +164,7 @@ def get_post_tile_data():
         cur_dict["post_id"] = i[0]
         cur_dict["title"] = i[1]
         cur_dict["author_id"] = i[2]
-        cur.execute(f"SELECT name FROM users WHERE user_id = {i[2]}")
+        cur.execute(f"SELECT name FROM users WHERE user_id = {i[2]};")
         cur_dict["author_name"] = cur.fetchone()[0]
 
         cur_dict["description"] = i[3]
@@ -185,18 +185,17 @@ def get_user_id(user_login):
     for i in logins:
         if user_login in i:
             print("User found! Now searching their ID!")
-            cur.execute(f"SELECT user_id FROM users WHERE login = {user_login}")
+            cur.execute(f"SELECT user_id FROM users WHERE login = '{user_login}';")
             user_id = cur.fetchall()[0]
             print(f"{user_login}'s  is", user_id)
             return user_id
-    
+
     print("No user with such login located!")
     return -1
 
 
-
 def get_hashed_user_password(user_id):
-    cur.execute(f"SELECT password FROM users WHERE user_id = {user_id}")
+    cur.execute(f"SELECT password FROM users WHERE user_id = {user_id};")
     return cur.fetchall()[0]
 
 
