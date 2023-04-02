@@ -49,7 +49,7 @@ def user_loader(login):
         return
 
     user = User()
-    user.id = res
+    user.id = login
     return user
 
 
@@ -92,8 +92,9 @@ def signin():
         return "Bad login, password didn't match"
 
     user = User()
-    user.id = user_id
+    user.id = user_login
     flask_login.login_user(user)
+    print("logged in as", user_login, "with id", user_id)
     return redirect(url_for("make_post"))
     # return redirect('/success')
 
