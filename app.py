@@ -34,30 +34,7 @@ class RegisterForm(FlaskForm):
 @app.route('/')
 @app.route('/index')
 def index():
-    cur.execute("SELECT * FROM posts")
-    posts = list()
-    for i in cur:
-        print(i)
-        posts.append(i)
-    # print(posts)
-    # posts = [(2, 'Greatest contraption of all time!', 1, 'I spent 80 years on this', None, None, None)]
-    posts_dict = dict()
-    posts_dict["news"] = list()
-    for i in posts:
-        cur_dict = dict()
-        cur_dict["post_id"] = i[0]
-        cur_dict["title"] = i[1]
-        cur_dict["author_id"] = i[2]
-        cur.execute(f"SELECT name FROM users WHERE user_id = {i[2]}")
-        cur_dict["author_name"] = cur.fetchone()[0]
-
-        cur_dict["description"] = i[3]
-        cur_dict["likes"] = i[4]
-        cur_dict["text_tutorial"] = i[5]
-        cur_dict["video_tutorial"] = i[6]
-        posts_dict["news"].append(cur_dict)
-    print(posts_dict)
-
+    posts_dict = get_post_tile_data()
 
     return render_template("index.html", posts=posts_dict)
 
@@ -82,9 +59,19 @@ def signup():
 
 @app.route('/post/<post_id>')
 def post(post_id):
+    post_data = get_post_data(post_id)
+
+    return render_template('post.html', **post_data)
+
+
+@app.route('/make_post', methods=['GET', 'POST'])
+def make_post():
+    return render_template('makepost.html')
+
+
+def get_post_data(post_id):
     cur.execute(f"SELECT * FROM posts WHERE post_id = {post_id}")
     post = cur.fetchall()[0]
-    # post = (2, 'Greatest contraption of all time!', 1, 'I spent 80 years on this', None, None, None, "02-03-2003")
 
     params = dict()
     params["title"] = post[1]
@@ -97,13 +84,34 @@ def post(post_id):
     params["text_tutorial"] = post[5]
     params["video_tutorial"] = post[6]
 
-    return render_template('post.html', **params)
+    return params
 
 
-@app.route('/make_post', methods=['GET', 'POST'])
-def make_post():
-    # if
-    return render_template('makepost.html')
+def get_post_tile_data():
+    cur.execute("SELECT * FROM posts")
+    posts = list()
+    for i in cur:
+        print(i)
+        posts.append(i)
+
+    posts_dict = dict()
+    posts_dict["news"] = list()
+
+    for i in posts:
+        cur_dict = dict()
+        cur_dict["post_id"] = i[0]
+        cur_dict["title"] = i[1]
+        cur_dict["author_id"] = i[2]
+        cur.execute(f"SELECT name FROM users WHERE user_id = {i[2]}")
+        cur_dict["author_name"] = cur.fetchone()[0]
+
+        cur_dict["description"] = i[3]
+        cur_dict["likes"] = i[4]
+        cur_dict["text_tutorial"] = i[5]
+        cur_dict["video_tutorial"] = i[6]
+        posts_dict["news"].append(cur_dict)
+
+    return posts_dict
 
 
 if __name__ == '__main__':
