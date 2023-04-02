@@ -86,8 +86,11 @@ def signin():
     user_id = get_user_id(user_login)
     if user_id == -1:
         return "Bad login, no user found"
-    if not check_password_hash(get_hashed_user_password(user_id), form.password.data):
+    # if not check_password_hash(get_hashed_user_password(user_id), form.password.data):
+    #     return "Bad login, password didn't match"
+    if get_hashed_user_password(user_id) != form.password.data:
         return "Bad login, password didn't match"
+
     user = User()
     user.id = user_id
     flask_login.login_user(user)
@@ -186,8 +189,8 @@ def get_user_id(user_login):
         if user_login in i:
             print("User found! Now searching their ID!")
             cur.execute(f"SELECT user_id FROM users WHERE login = '{user_login}';")
-            user_id = cur.fetchall()[0]
-            print(f"{user_login}'s  is", user_id)
+            user_id = cur.fetchall()[0][0]
+            print(f"{user_login}'s id is", user_id)
             return user_id
 
     print("No user with such login located!")
