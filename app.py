@@ -82,6 +82,11 @@ def signup():
 
 @app.route('/post/<post_id>')
 def post(post_id):
+    cur.execute(f"SELECT * FROM posts WHERE post_id = {post_id}")
+    print("FETCHING")
+    print(cur.fetchall())
+    print("NOW ONE")
+    print(cur.fetchone())
     return render_template('post.html')
 
 
