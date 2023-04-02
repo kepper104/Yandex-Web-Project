@@ -84,10 +84,22 @@ def signup():
 def post(post_id):
     cur.execute(f"SELECT * FROM posts WHERE post_id = {post_id}")
     print("FETCHING")
-    print(cur.fetchall())
-    print("NOW ONE")
-    print(cur.fetchone())
-    return render_template('post.html')
+    print(cur.fetchall()[0])
+    post = cur.fetchall()[0]
+    # post = (2, 'Greatest contraption of all time!', 1, 'I spent 80 years on this', None, None, None, "02-03-2003")
+
+    params = dict()
+    params["title"] = post[1]
+
+    cur.execute(f"SELECT name FROM users WHERE user_id = {post[2]}")
+    params["author_name"] = cur.fetchone()[0]
+
+    params["creation_date"] = post[7]
+    params["description"] = post[3]
+    params["text_tutorial"] = post[5]
+    params["video_tutorial"] = post[6]
+
+    return render_template('post.html', **params)
 
 
 @app.route('/make_post', methods=['GET', 'POST'])
@@ -100,13 +112,3 @@ if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
 
-{   2:
-     {'post_id': 2,
-     'title': 'Greatest contraption of all time!',
-     'author_id': 1,
-     'author_name': 'Kirill',
-     'description': 'I spent 80 years on this',
-     'likes': None,
-     'text_tutorial': None,
-     'video_tutorial': None}
- }
