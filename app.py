@@ -83,8 +83,6 @@ def signup():
 @app.route('/post/<post_id>')
 def post(post_id):
     cur.execute(f"SELECT * FROM posts WHERE post_id = {post_id}")
-    print("FETCHING")
-    print(cur.fetchall()[0])
     post = cur.fetchall()[0]
     # post = (2, 'Greatest contraption of all time!', 1, 'I spent 80 years on this', None, None, None, "02-03-2003")
 
