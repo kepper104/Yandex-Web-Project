@@ -181,14 +181,18 @@ def get_user_id(user_login):
     cur.execute("SELECT login FROM users")
     logins = cur.fetchall()
     print("Logins are:", logins)
-    if user_login not in logins:
-        print("No user with such login located!")
-        return -1
-    print("User found! Now searching their ID!")
-    cur.execute(f"SELECT user_id FROM users WHERE login = {user_login}")
-    user_id = cur.fetchall()[0]
-    print(f"{user_login}'s  is", user_id)
-    return user_id
+
+    for i in logins:
+        if user_login in i:
+            print("User found! Now searching their ID!")
+            cur.execute(f"SELECT user_id FROM users WHERE login = {user_login}")
+            user_id = cur.fetchall()[0]
+            print(f"{user_login}'s  is", user_id)
+            return user_id
+    
+    print("No user with such login located!")
+    return -1
+
 
 
 def get_hashed_user_password(user_id):
