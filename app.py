@@ -82,6 +82,7 @@ def signin():
         return render_template('signin.html', form=form)
     print("Trying to log in")
     user_login = form.username.data
+    print("User login is", user_login)
     user_id = get_user_id(user_login)
     if user_id == -1:
         return "Bad login, no user found"
