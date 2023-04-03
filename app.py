@@ -37,15 +37,16 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    login = StringField('Login', validators=[DataRequired(), Length(min=4, max=100)])
+    def validate_login(self, field):
+        if does_user_exist(field.data):
+            raise ValidationError('Login already exists')
+
+    login = StringField('Login', validators=[DataRequired(), validate_login(), Length(min=4, max=100)])
     name = StringField('Name', validators=[DataRequired(), Length(min=4, max=100)])
     password_1 = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
     password_2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(min=4), EqualTo("password_1", message="Passwords don't match!")])
     submit = SubmitField('Sign Up')
 
-    def validate_login(field):
-        if does_user_exist():
-            raise ValidationError('Login already exists')
 
 
 @login_manager.user_loader
