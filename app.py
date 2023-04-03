@@ -100,7 +100,6 @@ def signin():
     # return redirect('/success')
 
 
-
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
@@ -108,7 +107,7 @@ def signup():
         return render_template('signup.html', form=form)
 
 
-    return "<h1>" + form.username.data + " " + form.password_1.data + " " + form.password_2.data + "</h1>"
+    return "<h1>" + form.login.data + " " + form.name.data + " " + form.password_1.data + " " + form.password_2.data + "</h1>"
 
 
 @app.route('/post/<post_id>')

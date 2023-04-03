@@ -5,9 +5,18 @@
         {{ form.hidden_tag() }}
         <h1 align="center">Sign up</h1>
         <p>
-            {{ form.username.label }}<br />
-            {{ form.username(class="form-control") }}
-            {% for error in form.username.errors %}
+            {{ form.login.label }}<br />
+            {{ form.login(class="form-control") }}
+            {% for error in form.login.errors %}
+        </p>
+         <div class="alert alert-danger" role="alert" style="padding: 10px">
+            {{ error }}
+        </div>
+        {% endfor %}
+        <p>
+            {{ form.name.label }}<br />
+            {{ form.name(class="form-control") }}
+            {% for error in form.name.errors %}
         </p>
 
         <div class="alert alert-danger" role="alert" style="padding: 10px">
