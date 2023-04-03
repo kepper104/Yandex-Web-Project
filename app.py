@@ -112,6 +112,7 @@ def signup():
     form = RegisterForm()
     if not form.validate_on_submit():
         return render_template('signup.html', form=form)
+    print("Login:", form.login.data, ". Password:", form.password_1.data)
     hashed_password = generate_password_hash(form.password_1.data)
     res = register_user(form.login.data, form.name.data, hashed_password)
     if not res:
