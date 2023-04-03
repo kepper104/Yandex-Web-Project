@@ -97,7 +97,7 @@ def signin():
     # if not check_password_hash(get_hashed_user_password(user_id), form.password.data):
     #     return "Bad login, password didn't match"
     hashed_password = get_hashed_user_password(user_id)
-    cur_password = form.password.data
+    cur_password = str(form.password.data)
     print("Hashed Password:", hashed_password)
     print("Input Password:", cur_password)
     if check_password_hash(hashed_password, cur_password):
