@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, StopValidation
-from mysql.connector import connect, Error
+from mysql.connector import connect
 from config import db_user, db_password
 import flask_login
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -123,19 +123,19 @@ def signup():
 def post(post_id):
     post_data = get_post_data(post_id)
 
-    return render_template(url_for("post"), **post_data)
+    return render_template("post.html", **post_data)
 
 
 @app.route('/make_post', methods=['GET', 'POST'])
 @flask_login.login_required
 def make_post():
     if request.method == "GET":
-        return render_template(url_for("make_post"))
+        return render_template("make_post.html")
     print(request.form)
 
     commit_post(request.form)
 
-    return redirect(url_for("index"))
+    return redirect("index.html")
 
 
 @app.route('/logout')
@@ -251,7 +251,8 @@ def commit_post(form_data):
         image = Image.open(cont_screenshot)
         image.save("./static/pictures/last_photo.png")
         print(cont_screenshot.read())
-
+    # cur.execute(f"""INSERT INTO posts (title, author_id, description, text_tutorial, video_tutorial)
+    #                 VALUES ({cont_name}, {cont_author_id})""")
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
