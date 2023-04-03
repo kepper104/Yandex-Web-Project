@@ -1,8 +1,7 @@
 import os
 
-import flask
 import mysql.connector
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
 
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
@@ -35,7 +34,7 @@ class UniqueLogin:
             message = field.gettext("User with this login already exists")
         else:
             message = self.message
-            
+
         print("Case 4")
         field.errors[:] = []
         raise StopValidation(message)
@@ -102,9 +101,8 @@ def signin():
     user = User()
     user.id = user_login
     flask_login.login_user(user)
-    print("logged in as", user_login, "with id", user_id)
-    return redirect(url_for("make_post"))
-    # return redirect('/success')
+    print("Logged in as", user_login, "with id", user_id)
+    return redirect(url_for("index"))
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -116,11 +114,11 @@ def signup():
     hashed_password = generate_password_hash(form.password_1.data)
     res = register_user(form.login.data, form.name.data, hashed_password)
     if not res:
-        return "Error"
+        return "DataBase Error"
     return redirect(url_for("signin"))
 
 
-@app.route('/post/<post_id>')
+@app.route('/post/<post_id>', methods=['GET', 'POST'])
 def post(post_id):
     post_data = get_post_data(post_id)
 
@@ -130,7 +128,10 @@ def post(post_id):
 @app.route('/make_post', methods=['GET', 'POST'])
 @flask_login.login_required
 def make_post():
-    return render_template('makepost.html')
+    if request.method == "GET":
+        return render_template('makepost.html')
+    print(request.form)
+    return "hehe"
 
 
 @app.route('/logout')
