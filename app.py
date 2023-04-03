@@ -22,8 +22,7 @@ login_manager.init_app(app)
 connection = connect(host="localhost", user=db_user, password=db_password, database="minecraft_repository")
 cur = connection.cursor()
 print("Connected to DB!")
-# cur.execute("SELECT * FROM users")
-# print(cur)
+
 
 class UniqueLogin:
     def __init__(self, message=None):
