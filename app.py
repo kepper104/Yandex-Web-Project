@@ -221,6 +221,7 @@ def register_user(login, name, password):
         cur.execute(f"INSERT INTO users (login, password, name) VALUES ({login}, {password}, {name})")
         return True
     except mysql.connector.Error as e:
+        print(e)
         return False
 
 def does_user_exist(login):
