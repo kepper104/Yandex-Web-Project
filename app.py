@@ -218,7 +218,7 @@ def get_hashed_user_password(user_id):
 
 def register_user(login, name, password):
     try:
-        cur.execute(f"INSERT INTO users (login, password, name) VALUES ({login}, {password}, {name})")
+        cur.execute(f'INSERT INTO users (login, password, name) VALUES ("{login}", "{password}", "{name}")')
         return True
     except mysql.connector.Error as e:
         print(e)
