@@ -70,3 +70,12 @@ li a {
 li a:hover {
   background-color: #111;
 }
+
+#navbar_username {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: #333333;
+}
