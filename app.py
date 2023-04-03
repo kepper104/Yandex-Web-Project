@@ -30,14 +30,18 @@ class UniqueLogin:
         self.field_flags = {"required": True}
 
     def __call__(self, form, field):
+        print("Validating")
         if field.data and (not isinstance(field.data, str) or field.data.strip()):
+            print("Case 1")
             return
 
         if does_user_exist(field.data):
+            print("Case 2")
             message = field.gettext("This field is required.")
         else:
+            print("Case 3")
             message = self.message
-
+        print("Case 4")
         field.errors[:] = []
         raise StopValidation(message)
 
