@@ -219,16 +219,19 @@ def get_hashed_user_password(user_id):
 def register_user(login, name, password):
     try:
         cur.execute(f'INSERT INTO users (login, password, name) VALUES ("{login}", "{password}", "{name}")')
+        connection.commit()
         return True
     except mysql.connector.Error as e:
         print(e)
         return False
+
 
 def does_user_exist(login):
     id = get_user_id(login)
     if id == -1:
         return False
     return True
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
