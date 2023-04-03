@@ -123,26 +123,19 @@ def signup():
 def post(post_id):
     post_data = get_post_data(post_id)
 
-    return render_template('post.html', **post_data)
+    return render_template(url_for("post"), **post_data)
 
 
 @app.route('/make_post', methods=['GET', 'POST'])
 @flask_login.login_required
 def make_post():
     if request.method == "GET":
-        return render_template('makepost.html')
+        return render_template(url_for("make_post"))
     print(request.form)
-    cont_name = request.form['contraption_name']
-    cont_description = request.form['description']
-    cont_category = request.form['category']
-    cont_text_tutorial = request.form['text_tutorial']
-    cont_video_tutorial = request.form['video_tutorial']
-    cont_screenshot = request.files['screenshot']
-    if cont_screenshot != None:
-        image = Image.open(cont_screenshot)
-        image.save("./static/pictures/last_photo.png")
-        print(cont_screenshot.read())
-    return "\n".join(request.form)
+
+    commit_post(request.form)
+
+    return redirect(url_for("index"))
 
 
 @app.route('/logout')
@@ -243,6 +236,21 @@ def does_user_exist(login):
     if id == -1:
         return False
     return True
+
+
+def commit_post(form_data):
+    cont_name = form_data['contraption_name']
+    cont_description = form_data['description']
+    cont_category = form_data['category']
+    cont_text_tutorial = form_data['text_tutorial']
+    cont_video_tutorial = form_data['video_tutorial']
+    cont_screenshot = form_data['screenshot']
+    cont_author_id = flask_login.current_user.username
+    print("User: ", cont_author_id)
+    if cont_screenshot is not None:
+        image = Image.open(cont_screenshot)
+        image.save("./static/pictures/last_photo.png")
+        print(cont_screenshot.read())
 
 
 if __name__ == '__main__':
