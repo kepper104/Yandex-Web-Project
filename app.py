@@ -1,6 +1,7 @@
 import os
 
 import mysql.connector
+from PIL import Image
 from flask import Flask, render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
 
@@ -131,7 +132,17 @@ def make_post():
     if request.method == "GET":
         return render_template('makepost.html')
     print(request.form)
-    return "hehe"
+    cont_name = request.form['contraption_name']
+    cont_description = request.form['description']
+    cont_category = request.form['category']
+    cont_text_tutorial = request.form['text_tutorial']
+    cont_video_tutorial = request.form['video_tutorial']
+    cont_screenshot = request.files['screenshot']
+    if cont_screenshot != None:
+        image = Image.open(cont_screenshot)
+        image.save("./static/pictures/last_photo.png")
+        print(cont_screenshot.read())
+    return "\n".join(request.form)
 
 
 @app.route('/logout')
