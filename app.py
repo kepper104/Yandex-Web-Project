@@ -96,7 +96,7 @@ def signin():
         return "Bad login, no user found"
     # if not check_password_hash(get_hashed_user_password(user_id), form.password.data):
     #     return "Bad login, password didn't match"
-    if get_hashed_user_password(user_id) != form.password.data:
+    if check_password_hash(get_hashed_user_password(user_id), form.password.data):
         return "Bad login, password didn't match"
 
     user = User()
@@ -117,7 +117,6 @@ def signup():
     if not res:
         return "Error"
     return redirect(url_for("signin"))
-    return "<h1>" + form.login.data + " " + form.name.data + " " + form.password_1.data + " " + form.password_2.data + "</h1>"
 
 
 @app.route('/post/<post_id>')
@@ -229,7 +228,6 @@ def does_user_exist(login):
     if id == -1:
         return False
     return True
-
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
