@@ -130,7 +130,7 @@ def post(post_id):
 @flask_login.login_required
 def make_post():
     if request.method == "GET":
-        return render_template(url_for("makepost"))
+        return render_template(url_for("make_post"))
     print(request.form)
 
     commit_post(request.form)
