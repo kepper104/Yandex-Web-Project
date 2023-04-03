@@ -245,15 +245,21 @@ def commit_post(form_data):
     cont_text_tutorial = form_data['text_tutorial']
     cont_video_tutorial = form_data['video_tutorial']
     cont_screenshot = form_data['screenshot']
-    cont_author_id = flask_login.current_user.username
-    print("User: ", cont_author_id)
-    if cont_screenshot is not None:
-        image = Image.open(cont_screenshot)
-        image.save("./static/pictures/last_photo.png")
-        print(cont_screenshot.read())
-    # cur.execute(f"""INSERT INTO posts (title, author_id, description, text_tutorial, video_tutorial)
-    #                 VALUES ({cont_name}, {cont_author_id})""")
+    cont_author_id = get_user_id(flask_login.current_user.id)
 
+    print("User: ", cont_author_id)
+    print(cont_screenshot)
+    # if cont_screenshot is not None:
+    #     image = Image.open(cont_screenshot)
+    #     image.save("./static/pictures/last_photo.png")
+    #     print(cont_screenshot.read())
+    cur.execute(f"""INSERT INTO posts (title, author_id, description, text_tutorial, video_tutorial, category)
+                    VALUES ("{cont_name}", "{cont_author_id}", "{cont_description}", "{cont_text_tutorial}", "{cont_video_tutorial}", "{cont_category}")""")
+
+    connection.commit()
+    print("Post posted!")
+
+    
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
