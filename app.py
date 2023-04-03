@@ -1,10 +1,12 @@
 import os
 
 import flask
+import mysql.connector
 from flask import Flask, render_template, redirect, url_for
 from flask_wtf import FlaskForm
+
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from mysql.connector import connect, Error
 from config import db_user, db_password
 import flask_login
@@ -31,7 +33,7 @@ class User(flask_login.UserMixin):
 class LoginForm(FlaskForm):
     username = StringField('Login', validators=[DataRequired(), Length(min=4, max=100)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=4, max=100)])
-    submit = SubmitField('Log in')
+    submit = SubmitField('Sign In')
 
 
 class RegisterForm(FlaskForm):
@@ -39,7 +41,11 @@ class RegisterForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=4, max=100)])
     password_1 = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
     password_2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(min=4), EqualTo("password_1", message="Passwords don't match!")])
-    submit = SubmitField('Log in')
+    submit = SubmitField('Sign Up')
+
+    def validate_login(field):
+        if does_user_exist():
+            raise ValidationError('Login already exists')
 
 
 @login_manager.user_loader
@@ -52,19 +58,6 @@ def user_loader(login):
     user = User()
     user.id = login
     return user
-
-
-# @login_manager.request_loader
-# def request_loader(request):
-#
-#     res = get_user_id(request.form.username.data)
-#
-#     if res == -1:  # no user found
-#         return
-#
-#     user = User()
-#     user.id = res
-#     return user
 
 
 @app.route('/')
@@ -105,8 +98,11 @@ def signup():
     form = RegisterForm()
     if not form.validate_on_submit():
         return render_template('signup.html', form=form)
-
-
+    hashed_password = generate_password_hash(form.password_1.data)
+    res = register_user(form.login.data, form.name.data, hashed_password)
+    if not res:
+        return "Error"
+    return redirect(url_for("signin"))
     return "<h1>" + form.login.data + " " + form.name.data + " " + form.password_1.data + " " + form.password_2.data + "</h1>"
 
 
@@ -204,6 +200,20 @@ def get_hashed_user_password(user_id):
     res = cur.fetchall()[0][0]
     print(res)
     return res
+
+
+def register_user(login, name, password):
+    try:
+        cur.execute(f"INSERT INTO users (login, password, name) VALUES ({login}, {password}, {name})")
+        return True
+    except mysql.connector.Error as e:
+        return False
+
+def does_user_exist(login):
+    id = get_user_id(login)
+    if id == -1:
+        return False
+    return True
 
 
 if __name__ == '__main__':
