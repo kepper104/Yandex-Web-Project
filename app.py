@@ -240,7 +240,7 @@ def commit_post(form_data):
     cont_name = form_data['contraption_name']
     cont_description = form_data['description']
     cont_category = form_data['category']
-    cont_text_tutorial = form_data['text_tutorial'].replace("\r", " ").strip()
+    cont_text_tutorial = form_data['text_tutorial'].replace("\r\n", "<br>").strip()
     cont_video_tutorial = form_data['video_tutorial'].strip()
     cont_screenshot = form_data['screenshot']
     cont_author_id = get_user_id(flask_login.current_user.id)
