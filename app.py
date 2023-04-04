@@ -240,7 +240,7 @@ def commit_post(form_data):
     cont_name = form_data['contraption_name']
     cont_description = form_data['description']
     cont_category = form_data['category']
-    cont_text_tutorial = form_data['text_tutorial'].replace("\r\n", "<br>").strip()
+    cont_text_tutorial = form_data['text_tutorial']
     cont_video_tutorial = form_data['video_tutorial'].strip()
     cont_screenshot = form_data['screenshot']
     cont_author_id = get_user_id(flask_login.current_user.id)
@@ -251,6 +251,8 @@ def commit_post(form_data):
     #     image = Image.open(cont_screenshot)
     #     image.save("./static/pictures/last_photo.png")
     #     print(cont_screenshot.read())
+    print(repr(cont_text_tutorial))
+
     cur.execute(f"""INSERT INTO posts (title, author_id, description, text_tutorial, video_tutorial, category)
                     VALUES ("{cont_name}", {cont_author_id}, "{cont_description}", "{cont_text_tutorial}", "{cont_video_tutorial}", "{cont_category}")""")
 
