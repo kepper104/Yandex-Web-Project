@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block content %}
+
 <div id="make-post">
     <strong><h1>Post a new Contraption</h1></strong>
 
     <form class="post_form" method="post">
-
 <!--        Name-->
         <h4>Name Your contraption</h4>
         <input type="text" id="name" class="form-control" name="contraption_name" placeholder=""> <br>
@@ -23,13 +23,13 @@
 
 
 <!--    Text Tutorial-->
-        <h4>Optionally, add a text tutorial</h4>
-        <textarea class="form-control" id="text-tutorial" rows="3" name="text_tutorial" placeholder=""></textarea>
+        <h4>Optionally, add a text tutorial. If not, leave empty</h4>
+        <textarea class="form-control" id="text-tutorial" rows="4" name="text_tutorial" placeholder=""></textarea>
 
 
 <!--    Video Link-->
-        <h4>Optionally, link a YouTube video with a tutorial </h4>
-        <input type="text" id="youtube-link" class="form-control" name="video_tutorial" placeholder="">
+        <h4>Optionally, link a YouTube video with a tutorial. If not, leave empty</h4>
+        <input type="text" id="youtube-link" class="form-control" name="video_tutorial" placeholder="Full link to a YouTube video">
 
 <!--    Screenshots upload-->
         <h4>Upload screenshots</h4>
@@ -37,7 +37,8 @@
         <br>
 <!--    Post button-->
         <button style="margin: 10px" type="submit" class="btn btn-primary">Post</button>
-    </form>
 
+    </form>
 </div>
+
 {% endblock %}

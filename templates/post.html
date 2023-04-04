@@ -15,24 +15,16 @@
 <!--        a pain.-->
         {{description}}
     </p>
-
+    {% if (text_tutorial != "") %}
     <h2>Text Tutorial</h2>
-    {{text_tutorial}}
-<!--    <p>1. Dig a 5x5 hole in the ground where you want to build the farm.</p>-->
-<!--    <p>2. Place water in each corner of the hole.</p>-->
-<!--    <p>3. Place hoppers in the ground next to the water.</p>-->
-<!--    <p>4. Place a chest next to the hoppers.</p>-->
-<!--    <p>5. Place dirt blocks on top of the hoppers.</p>-->
-<!--    <p>6. Plant your crops on the dirt blocks.</p>-->
-<!--    <p>7. Place a redstone comparator next to one of the hoppers.</p>-->
-<!--    <p>8. Place a redstone repeater next to the comparator.</p>-->
-<!--    <p>9. Place redstone dust on top of the comparator and repeater.</p>-->
-<!--    <p>10. Place a lever next to the redstone dust.</p>-->
-<!--    <p>11. Flip the lever to turn on the farm.</p>-->
-<!--    <p>12. As the crops grow, they will be harvested by the water and collected by the hoppers.</p>-->
+    <p>{{text_tutorial}}</p>
+    {% endif %}
+
+    {% if (video_tutorial != "") %}
     <h2>Video Tutorial</h2>
 <!--    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allowfullscreen></iframe>-->
     <iframe width="560" height="315" src="{{video_tutorial}}" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+    {% endif %}
 
     <div class="like-dislike">
         <span class="like" onclick="">&#x1f44d; <span id="likes">0</span></span>

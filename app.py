@@ -76,7 +76,6 @@ def user_loader(login):
 @app.route('/index')
 def index():
     posts_dict = get_post_tile_data()
-
     return render_template("index.html", posts=posts_dict)
 
 
@@ -122,7 +121,6 @@ def signup():
 @app.route('/post/<post_id>', methods=['GET', 'POST'])
 def post(post_id):
     post_data = get_post_data(post_id)
-
     return render_template("post.html", **post_data)
 
 
@@ -177,7 +175,7 @@ def get_post_tile_data():
         posts.append(i)
 
     posts_dict = dict()
-    posts_dict["news"] = list()
+    posts_dict["posts"] = list()
 
     for i in posts:
         cur_dict = dict()
@@ -191,7 +189,7 @@ def get_post_tile_data():
         cur_dict["likes"] = i[4]
         cur_dict["text_tutorial"] = i[5]
         cur_dict["video_tutorial"] = i[6]
-        posts_dict["news"].append(cur_dict)
+        posts_dict["posts"].append(cur_dict)
 
     return posts_dict
 
@@ -242,8 +240,8 @@ def commit_post(form_data):
     cont_name = form_data['contraption_name']
     cont_description = form_data['description']
     cont_category = form_data['category']
-    cont_text_tutorial = form_data['text_tutorial']
-    cont_video_tutorial = form_data['video_tutorial']
+    cont_text_tutorial = form_data['text_tutorial'].replace("\r", " ").strip()
+    cont_video_tutorial = form_data['video_tutorial'].strip()
     cont_screenshot = form_data['screenshot']
     cont_author_id = get_user_id(flask_login.current_user.id)
 

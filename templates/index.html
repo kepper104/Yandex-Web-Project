@@ -3,7 +3,7 @@
     <h2>Browse all builds</h2>
 
     <div class="tiles">
-        {% for tile in posts['news'] %}
+        {% for tile in posts['posts'] %}
         <a href="/post/{{tile['post_id']}}" class="no_underline">
             <div class="tile">
                 <img src="/static/pictures/build1.png" alt="Build 1" />
@@ -15,6 +15,5 @@
 
     </div>
 </main>
-<h3>Build names with a lot of long words are not recommended</h3>
 
 {% endblock %}
