@@ -131,6 +131,7 @@ def make_post():
     print(request.form)
 
     commit_post(request.form)
+    print("REDIRECTING")
     return redirect(url_for("make_post_screenshots"))
 
 @app.route('/make_post_screenshots', methods=['GET', 'POST'])
