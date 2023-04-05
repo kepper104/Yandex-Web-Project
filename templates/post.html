@@ -6,13 +6,13 @@
     <p>Posted {{creation_date}}</p>
 
     <h2>Screenshots</h2>
-<!--    <img src="farm1.png" alt="Screenshot of the automated farm" />-->
-<!--    <img src="farm2.png" alt="Another screenshot of the automated farm" />-->
+    {% for screenshot in screenshots %}
+
+    <img src="/static/pictures/{{screenshot}}" alt="Contraption screenshot {{screenshot}}" />
+    <br>
 
     <h2>Description</h2>
     <p>
-<!--        This automated farm is designed to make your life easier in Minecraft. It will automatically harvest crops and replant them, so you don't have to spend time doing it yourself. It is perfect for large farms where manual labor can be-->
-<!--        a pain.-->
         {{description}}
     </p>
     {% if (text_tutorial != "") %}
