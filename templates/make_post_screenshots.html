@@ -11,11 +11,10 @@
 
 <!--    Screenshots upload-->
         <h4>Upload screenshots</h4>
-        {{screenshots_number}}
-<!--        {% for i in iterat %}-->
-<!--        <input type="file" class="form-control-file" id="photo" name="screenshot_{{i}}"><br>-->
-<!--        {% endfor %}-->
-<!--        {% endif %}-->
+
+        {% for i in iterat %}
+        <input type="file" class="form-control-file" id="photo" name="screenshot_{{i}}"><br>
+        {% endfor %}
 
 <!--    Post button-->
         <button style="margin: 10px" type="submit" class="btn btn-primary">Continue</button>
