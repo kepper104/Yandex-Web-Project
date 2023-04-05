@@ -145,7 +145,13 @@ def make_post_screenshots():
         iterat = list(range(int(screenshots_n)))
         return render_template("make_post_screenshots.html", iterat=iterat)
     print(request.form)
-    return "A"
+    data = request.form
+    for i in range(int(request.args.get("screenshots_number"))):
+        screen = data[f'screenshot_{i}']
+        image = Image.open(screen)
+        image.save(f"./static/pictures/image_{i}.png")
+        # print(screen.read())
+    return redirect(url_for("index"))
 
 @app.route('/logout')
 @flask_login.login_required
@@ -259,9 +265,7 @@ def commit_post(form_data):
     print("User: ", cont_author_id)
     # print(cont_screenshot)
     # if cont_screenshot is not None:
-    #     image = Image.open(cont_screenshot)
-    #     image.save("./static/pictures/last_photo.png")
-    #     print(cont_screenshot.read())
+
     print(repr(cont_text_tutorial))
 
     cur.execute(f"""INSERT INTO posts (title, author_id, description, text_tutorial, video_tutorial, category)
