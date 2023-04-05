@@ -6,9 +6,14 @@
     <h1>{{title}}</h1>
     <p>Author: {{author_name}}</p>
     <p>Posted {{creation_date}}</p>
+
+    <h2>Description</h2>
+    <p>
+        {{description}}
+    </p>
     {% if (screenshots) %}
     <h2>Screenshots</h2>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 60%; height: 100%">
 
 
         <ol class="carousel-indicators">
@@ -41,10 +46,6 @@
     </div>
 
     {% endif %}
-    <h2>Description</h2>
-    <p>
-        {{description}}
-    </p>
     {% if (text_tutorial != "") %}
     <h2>Text Tutorial</h2>
     <p>{{text_tutorial}}</p>
