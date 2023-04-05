@@ -2,7 +2,7 @@ import os
 
 import mysql.connector
 from PIL import Image
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_wtf import FlaskForm
 
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
@@ -46,13 +46,12 @@ class User(flask_login.UserMixin):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Login', validators=[DataRequired(), Length(min=4, max=100)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=4, max=100)])
+    username = StringField('Login', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Sign In')
 
 
 class RegisterForm(FlaskForm):
-
     login = StringField('Login', validators=[DataRequired(), UniqueLogin(), Length(min=4, max=100)])
     name = StringField('Name', validators=[DataRequired(), Length(min=4, max=100)])
     password_1 = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
@@ -90,13 +89,13 @@ def signin():
     print("User login is", user_login)
     user_id = get_user_id(user_login)
     if user_id == -1:
-        return "Bad login, no user found"
+        return "Error, login or password didn't match"
 
     hashed_password = get_hashed_user_password(user_id)
     cur_password = form.password.data
 
     if not check_password_hash(hashed_password, cur_password):
-        return "Bad login, password didn't match"
+        return "Error, login or password didn't match"
 
     user = User()
     user.id = user_login
@@ -132,9 +131,15 @@ def make_post():
     print(request.form)
 
     commit_post(request.form)
+    return redirect(url_for("make_post_screenshots", screenshots_number=int(request.form["screenshots_number"])))
 
-    return redirect(url_for("index"))
-
+@app.route('/make_post_screenshots', methods=['GET', 'POST'])
+@flask_login.login_required
+def make_post_screenshots():
+    if request.method == "GET":
+        # screenshots_n =
+        return render_template("make_post_screenshots.html")
+    return "A"
 
 @app.route('/logout')
 @flask_login.login_required

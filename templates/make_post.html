@@ -3,7 +3,7 @@
 <div id="make-post">
     <strong><h1>Post a new Contraption</h1></strong>
 
-    <form class="post_form" method="post">
+    <form action ="{{ url_for('make_post_screenshots') }}" method="post">
 <!--        Name-->
         <h4>Name Your contraption</h4>
         <input type="text" id="name" class="form-control" name="contraption_name" placeholder=""> <br>
@@ -32,11 +32,12 @@
         <input type="text" id="youtube-link" class="form-control" name="video_tutorial" placeholder="Full link to a YouTube video">
 
 <!--    Screenshots upload-->
-        <h4>Upload screenshots</h4>
-        <input type="file" class="form-control-file" id="photo" name="screenshot">
+        <h4>Select how many screenshots to upload</h4>
+        <input type="range" name="screenshots_number" >
         <br>
+
 <!--    Post button-->
-        <button style="margin: 10px" type="submit" class="btn btn-primary">Post</button>
+        <button style="margin: 10px" type="submit" class="btn btn-primary">Continue</button>
 
     </form>
 </div>
