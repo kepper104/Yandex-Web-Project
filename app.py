@@ -191,7 +191,7 @@ def get_post_data(post_id):
     cur.execute(f"SELECT picture_id FROM pictures WHERE parent_post_id = {post_id}")
     screenshots = list()
     for i in cur:
-        screenshots.append(f"image_{i}.png")
+        screenshots.append(f"image_{i[0]}.png")
     params["screenshots"] = screenshots
     return params
 
