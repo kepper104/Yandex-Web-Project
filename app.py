@@ -150,7 +150,9 @@ def make_post_screenshots():
     data = request.files
     post_id = request.args.get("post_id")
     print("Saving screenshots:")
+    print(request.args.get("screenshots_number"))
     for i in range(int(request.args.get("screenshots_number"))):
+        print(f"Saving {i}...")
         screen = data[f'screenshot_{i}']
         commit_screenshot(screen, post_id)
         print(f"Saved {i}")
