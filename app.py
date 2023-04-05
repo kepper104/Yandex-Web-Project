@@ -148,6 +148,7 @@ def make_post_screenshots():
         return render_template("make_post_screenshots.html", iterat=iterat)
     print(request.form)
     data = request.files
+    print("Data:", data)
     post_id = request.args.get("post_id")
     print("Saving screenshots:")
     print(request.args.get("screenshots_number"))
