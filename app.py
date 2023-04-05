@@ -190,9 +190,13 @@ def get_post_data(post_id):
     params["video_tutorial"] = post[6]
     cur.execute(f"SELECT picture_id FROM pictures WHERE parent_post_id = {post_id}")
     screenshots = list()
-    for i in cur:
+    screenshots_numbers = list()
+    for index, i in enumerate(cur):
+        if index != 0:
+            screenshots_numbers.append(i[0])
         screenshots.append(f"image_{i[0]}.png")
     params["screenshots"] = screenshots
+    params["screenshots_numbers"] = screenshots_numbers
     return params
 
 
