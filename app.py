@@ -250,11 +250,11 @@ def commit_post(form_data):
     cont_category = form_data['category']
     cont_text_tutorial = form_data['text_tutorial']
     cont_video_tutorial = form_data['video_tutorial'].strip()
-    cont_screenshot = form_data['screenshot']
+    # cont_screenshot = form_data['screenshot']
     cont_author_id = get_user_id(flask_login.current_user.id)
 
     print("User: ", cont_author_id)
-    print(cont_screenshot)
+    # print(cont_screenshot)
     # if cont_screenshot is not None:
     #     image = Image.open(cont_screenshot)
     #     image.save("./static/pictures/last_photo.png")
