@@ -214,6 +214,9 @@ def get_post_tile_data():
         cur_dict["likes"] = i[4]
         cur_dict["text_tutorial"] = i[5]
         cur_dict["video_tutorial"] = i[6]
+        cur.execute(f"SELECT picture_id FROM pictures WHERE parent_post_id = {i[0]}")
+        cur_dict["thumbnail_image"] = "image_" + str(cur.fetchall()[0][0]) + ".png"
+        print("Thumbnail image:", cur_dict['thumbnail_image'])
         posts_dict["posts"].append(cur_dict)
 
     return posts_dict

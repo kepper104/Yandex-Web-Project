@@ -6,7 +6,7 @@
         {% for tile in posts['posts'] %}
         <a href="/post/{{tile['post_id']}}" class="no_underline">
             <div class="tile">
-                <img src="/static/pictures/build1.png" alt="Build 1" />
+                <img src="/static/pictures/{{tile['thumbnail_image']}}"/>
                 <h3>{{tile['title']}}</h3>
                 <h5>By {{tile['author_name']}}</h5>
             </div>
