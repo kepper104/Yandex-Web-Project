@@ -132,16 +132,16 @@ def make_post():
     print("FUCK")
     commit_post(request.form)
     print("REDIRECTING")
-    return redirect(url_for("index"))
-    # return redirect(url_for("make_post_screenshots"))
+    # return redirect(url_for("index"))
+    return redirect(url_for("make_post_screenshots", screenshots_number=int(request.form["screenshots_number"])))
 
-# @app.route('/make_post_screenshots', methods=['GET', 'POST'])
-# @flask_login.login_required
-# def make_post_screenshots():
-#     if request.method == "GET":
-#         # screenshots_n =
-#         return render_template("make_post_screenshots.html")
-#     return "A"
+@app.route('/make_post_screenshots', methods=['GET', 'POST'])
+@flask_login.login_required
+def make_post_screenshots():
+    if request.method == "GET":
+        # screenshots_n =
+        return render_template("make_post_screenshots.html")
+    return "A"
 
 @app.route('/logout')
 @flask_login.login_required
@@ -250,7 +250,6 @@ def commit_post(form_data):
     cont_category = form_data['category']
     cont_text_tutorial = form_data['text_tutorial']
     cont_video_tutorial = form_data['video_tutorial'].strip()
-    # cont_screenshot = form_data['screenshot']
     cont_author_id = get_user_id(flask_login.current_user.id)
 
     print("User: ", cont_author_id)
