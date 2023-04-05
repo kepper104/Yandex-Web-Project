@@ -134,7 +134,7 @@ def make_post():
     print("REDIRECTING")
     # return redirect(url_for("index"))
     screenshots_n = request.form["screenshots_number"]
-    if screenshots_n == 0 or screenshots_n == "" or screenshots_n == " ":
+    if screenshots_n == 0 or screenshots_n == "" or screenshots_n == " " or screenshots_n == "0":
         return redirect(url_for("index"))
     return redirect(url_for("make_post_screenshots", screenshots_number=request.form["screenshots_number"], post_id=post_id))
 
