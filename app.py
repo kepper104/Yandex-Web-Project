@@ -132,15 +132,16 @@ def make_post():
 
     commit_post(request.form)
     print("REDIRECTING")
-    return redirect(url_for("make_post_screenshots"))
+    return redirect(url_for("index"))
+    # return redirect(url_for("make_post_screenshots"))
 
-@app.route('/make_post_screenshots', methods=['GET', 'POST'])
-@flask_login.login_required
-def make_post_screenshots():
-    if request.method == "GET":
-        # screenshots_n =
-        return render_template("make_post_screenshots.html")
-    return "A"
+# @app.route('/make_post_screenshots', methods=['GET', 'POST'])
+# @flask_login.login_required
+# def make_post_screenshots():
+#     if request.method == "GET":
+#         # screenshots_n =
+#         return render_template("make_post_screenshots.html")
+#     return "A"
 
 @app.route('/logout')
 @flask_login.login_required
