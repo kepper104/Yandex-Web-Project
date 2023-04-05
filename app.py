@@ -129,7 +129,7 @@ def make_post():
     if request.method == "GET":
         return render_template("make_post.html")
     print(request.form)
-
+    print("FUCK")
     commit_post(request.form)
     print("REDIRECTING")
     return redirect(url_for("index"))
@@ -244,6 +244,7 @@ def does_user_exist(login):
 
 
 def commit_post(form_data):
+    print("I AM GOING TO DIE")
     cont_name = form_data['contraption_name']
     cont_description = form_data['description']
     cont_category = form_data['category']
