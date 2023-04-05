@@ -135,6 +135,7 @@ def make_post():
     # return redirect(url_for("index"))
     screenshots_n = request.form["screenshots_number"]
     if screenshots_n == 0 or screenshots_n == "" or screenshots_n == " " or screenshots_n == "0":
+        create_dummy_screenshot(post_id)
         return redirect(url_for("index"))
     return redirect(url_for("make_post_screenshots", screenshots_number=request.form["screenshots_number"], post_id=post_id))
 
@@ -298,6 +299,7 @@ def commit_post(form_data):
     print("Post's id:", cur.lastrowid)
     return cur.lastrowid
 
+
 def commit_screenshot(screenshot, post_id):
     print("Executing...", post_id, screenshot)
     cur.execute(f"""INSERT INTO pictures (parent_post_id)
@@ -308,6 +310,20 @@ def commit_screenshot(screenshot, post_id):
     print(f"Saving picture with id {picture_id}")
     screenshot.save(f"./static/pictures/image_{picture_id}.png")
     print(f"Saved image_{picture_id}.png")
+
+
+def create_dummy_screenshot(post_id):
+    print("Executing...", post_id)
+    cur.execute(f"""INSERT INTO pictures (parent_post_id)
+                        VALUES ({post_id})""")
+    connection.commit()
+    print("Committed")
+    picture_id = cur.lastrowid
+    print(f"Saving picture with id {picture_id}")
+    f = Image.open("./static/pictures/default_image.jpeg")
+    f.save(f"./static/pictures/image_{picture_id}.png")
+    print(f"Saved image_{picture_id}.png")
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
