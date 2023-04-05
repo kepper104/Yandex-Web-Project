@@ -192,9 +192,12 @@ def get_post_data(post_id):
     screenshots = list()
     screenshots_numbers = list()
     for index, i in enumerate(cur):
-        if index != 0:
+        if index == 0:
+            first_screenshot = f"image_{i[0]}.png"
+        else:
             screenshots_numbers.append(i[0])
-        screenshots.append(f"image_{i[0]}.png")
+            screenshots.append(f"image_{i[0]}.png")
+    params["first_screenshot"] = first_screenshot
     params["screenshots"] = screenshots
     params["screenshots_numbers"] = screenshots_numbers
     return params
