@@ -130,13 +130,14 @@ def make_post():
         return render_template("make_post.html")
     print(request.form)
     print("FUCK")
-    commit_post(request.form)
+    post_id = commit_post(request.form)
     print("REDIRECTING")
     # return redirect(url_for("index"))
     screenshots_n = request.form["screenshots_number"]
     if screenshots_n == 0 or screenshots_n == "" or screenshots_n == " ":
         return redirect(url_for("index"))
-    return redirect(url_for("make_post_screenshots", screenshots_number=request.form["screenshots_number"]))
+    return redirect(url_for("make_post_screenshots", screenshots_number=request.form["screenshots_number"], post_id=post_id))
+
 
 @app.route('/make_post_screenshots', methods=['GET', 'POST'])
 @flask_login.login_required
@@ -147,10 +148,12 @@ def make_post_screenshots():
         return render_template("make_post_screenshots.html", iterat=iterat)
     print(request.form)
     data = request.files
+    post_id = request.args.get("post_id")
+    print("Saving screenshots:")
     for i in range(int(request.args.get("screenshots_number"))):
         screen = data[f'screenshot_{i}']
-
-        screen.save(f"./static/pictures/image_{i}.png")
+        commit_screenshot(screen, post_id)
+        print(f"Saved {i}")
         # print(screen.read())
     return redirect(url_for("index"))
 
@@ -275,6 +278,15 @@ def commit_post(form_data):
     connection.commit()
     print("Post posted!")
 
+    return cur.lastrowid
+def commit_screenshot(screenshot, post_id):
+    cur.execute(f"""INSERT INTO pictures (parent_post_id)
+                    VALUES ({post_id})""")
+    connection.commit()
+    picture_id = cur.lastrowid
+    print(f"Saving picture with id {picture_id}")
+    screenshot.save(f"./static/pictures/image_{picture_id}.png")
+    print(f"Saved image_{picture_id}.png")
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
