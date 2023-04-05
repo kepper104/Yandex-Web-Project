@@ -131,7 +131,7 @@ def make_post():
     print(request.form)
 
     commit_post(request.form)
-    return redirect(url_for("make_post_screenshots"))
+    return redirect(url_for("make_post_screenshots", screenshots_number=int(request.form["screenshots_number"])))
 
 @app.route('/make_post_screenshots', methods=['GET', 'POST'])
 @flask_login.login_required
