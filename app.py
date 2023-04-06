@@ -122,9 +122,13 @@ def post(post_id):
     if request.method == "GET":
         post_data = get_post_data(post_id)
         return render_template("post.html", **post_data)
+    print("Getting comment text")
     comment_text = request.form['comment']
+    print("Text is:", comment_text)
     commit_comment(comment_text, post_id)
+    print("Comment posted! Redirecting...")
     return redirect(f"/post/{post_id}")
+
 
 
 @app.route('/make_post', methods=['GET', 'POST'])
@@ -351,6 +355,7 @@ def create_dummy_screenshot(post_id):
 
 def commit_comment(comment_text, post_id):
     author_id = get_user_id(flask_login.current_user.id)
+    print("Author id is", author_id)
     cur.execute(f"""INSERT INTO comments(parent_post_id, author_id, text)
                     VALUES ({post_id}, {author_id}, "{comment_text}")""")
     connection.commit()
