@@ -76,6 +76,7 @@
 
     <ul id="comment-list">
     {% for comment in comments %}
+        <br>
     <li> {{comment["post_date"]}} From {{comment["author_name"]}} <br> {{comment["comment_text"]}}</li>
     {% endfor %}
     </ul>
