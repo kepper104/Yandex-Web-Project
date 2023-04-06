@@ -123,7 +123,7 @@ def post(post_id):
         post_data = get_post_data(post_id)
         return render_template("post.html", **post_data)
     comment_text = request.form['comment']
-
+    commit_comment(comment_text, post_id)
     return redirect(f"/post/{post_id}")
 
 
@@ -347,6 +347,7 @@ def create_dummy_screenshot(post_id):
     f = Image.open("./static/pictures/default_image.jpeg")
     f.save(f"./static/pictures/image_{picture_id}.png")
     print(f"Saved image_{picture_id}.png")
+
 
 def commit_comment(comment_text, post_id):
     author_id = get_user_id(flask_login.current_user.id)
