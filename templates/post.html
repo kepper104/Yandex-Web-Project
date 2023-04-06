@@ -70,10 +70,11 @@
         <input type="submit" value="Post Comment"/>
     </form>
 
-    <ul id="comment-list"></ul>
+    <ul id="comment-list">
     {% for comment in comments %}
     <li> {{comment["post_date"]}} From {{comment["author_name"]}} <br> {{comment["comment_text"]}}</li>
     {% endfor %}
+    </ul>
 </div>
 <!--<script src="//code.jquery.com/jquery.js"></script>-->
 <!--  &lt;!&ndash; Bootstrap JavaScript &ndash;&gt;-->
