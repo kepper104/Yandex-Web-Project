@@ -218,10 +218,12 @@ def get_post_data(post_id):
         comment_text = i[3]
         post_date = i[4]
         cur.execute(f"SELECT name FROM users WHERE user_id = {author_id};")
-        comment["author_name"] = cur.fetchall()[0][0]
+        res = cur.fetchall()[0][0]
+        comment["author_name"] = res
         comment["comment_text"] = comment_text
         comment["post_date"] = post_date
         comments.append(comment)
+        print("Updated comments list:", comments)
     params["comments"] = comments
 
     return params
