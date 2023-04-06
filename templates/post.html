@@ -63,12 +63,15 @@
 <!--    </div>-->
 
     <h2>Comments</h2>
-    <form class="post_form" method="post">
+    <div style="text-align: left">
+        <form class="post_form" method="post">
         <label for="comment">Leave a comment!</label>
         <textarea id="comment" name="comment" required></textarea>
         <br />
         <input type="submit" value="Post Comment"/>
     </form>
+    </div>
+
 
     <ul id="comment-list">
     {% for comment in comments %}
