@@ -1,4 +1,1 @@
-from small_test import app
-
-if __name__ == "__main__":
-    app.run()
+import small_test

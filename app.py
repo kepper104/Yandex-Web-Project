@@ -8,13 +8,13 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, StopValidation
 from mysql.connector import connect
-from config import db_user, db_password
+from config import db_user, db_password, secret_key_1, secret_key_2
 import flask_login
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = "amogus"
-app.config['SECRET_KEY'] = 'example_key'
+app.secret_key = secret_key_1
+app.config['SECRET_KEY'] = secret_key_2
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
