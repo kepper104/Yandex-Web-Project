@@ -62,18 +62,18 @@
 <!--        <span class="dislike" onclick="">&#x1f44e; <span id="dislikes">0</span></span>-->
 <!--    </div>-->
 
-<!--    <h2>Comments</h2>-->
-<!--    <form>-->
-<!--        <label for="name">Name:</label>-->
-<!--        <input type="text" id="name" name="name" required />-->
-<!--        <br />-->
-<!--        <label for="comment">Comment:</label>-->
-<!--        <textarea id="comment" name="comment" required></textarea>-->
-<!--        <br />-->
-<!--        <input type="submit" value="Post Comment" />-->
-<!--    </form>-->
+    <h2>Comments</h2>
+    <form>
+        <label for="comment">Leave a comment!</label>
+        <textarea id="comment" name="comment" required></textarea>
+        <br />
+        <input type="submit" value="Post Comment"/>
+    </form>
 
-<!--    <ul id="comment-list"></ul>-->
+    <ul id="comment-list"></ul>
+    {% for comment in comments %}
+    <li> {{comment["post_date"]}} From {{comment["author_name"]}} <br> {{comment["comment_text"]}}</li>
+    {% endfor %}
 </div>
 <!--<script src="//code.jquery.com/jquery.js"></script>-->
 <!--  &lt;!&ndash; Bootstrap JavaScript &ndash;&gt;-->

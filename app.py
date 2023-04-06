@@ -119,8 +119,12 @@ def signup():
 
 @app.route('/post/<post_id>', methods=['GET', 'POST'])
 def post(post_id):
-    post_data = get_post_data(post_id)
-    return render_template("post.html", **post_data)
+    if request.method == "GET":
+        post_data = get_post_data(post_id)
+        return render_template("post.html", **post_data)
+    comment_text = request.form['comment']
+
+    return redirect(f"/post/{post_id}")
 
 
 @app.route('/make_post', methods=['GET', 'POST'])
@@ -201,6 +205,21 @@ def get_post_data(post_id):
     params["first_screenshot"] = first_screenshot
     params["screenshots"] = screenshots
     params["screenshots_numbers"] = screenshots_numbers
+
+    cur.execute(f"""SELECT * FROM comments WHERE parent_post_id = {post_id}""")
+    comments = list()
+    for index, i in enumerate(cur):
+        comment = dict()
+        author_id = i[2]
+        comment_text = i[3]
+        post_date = i[4]
+        cur.execute(f"SELECT name FROM users WHERE user_id = {author_id};")
+        comment["author_name"] = cur.fetchone()[0]
+        comment["comment_text"] = comment_text
+        comment["post_date"] = post_date
+        comments.append(comment)
+    params["comments"] = comments
+
     return params
 
 
@@ -328,6 +347,13 @@ def create_dummy_screenshot(post_id):
     f = Image.open("./static/pictures/default_image.jpeg")
     f.save(f"./static/pictures/image_{picture_id}.png")
     print(f"Saved image_{picture_id}.png")
+
+def commit_comment(comment_text, post_id):
+    author_id = get_user_id(flask_login.current_user.id)
+    cur.execute(f"""INSERT INTO comments(parent_post_id, author_id, text)
+                    VALUES ({post_id}, {author_id}, "{comment_text}")""")
+    connection.commit()
+    print("Comment posted!")
 
 
 if __name__ == '__main__':
