@@ -42,7 +42,7 @@
     white-space: nowrap;
 }
 
-navbar.ul {
+.navbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -53,11 +53,11 @@ navbar.ul {
   width: 100%;
 }
 
-navbar.li {
+.navbar li {
   float: left;
 }
 
-navbar.li a {
+.navbar li a {
   display: block;
   color: white;
   text-align: center;
@@ -67,7 +67,7 @@ navbar.li a {
 
 
 /* Change the link color to #111 (black) on hover */
-navbar.li a:hover {
+.navbar li a:hover {
   background-color: #111;
 }
 
