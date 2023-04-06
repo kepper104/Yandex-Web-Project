@@ -228,7 +228,6 @@ def get_post_tile_data():
         cur_dict["video_tutorial"] = i[6]
         cur.execute(f"SELECT picture_id FROM pictures WHERE parent_post_id = {i[0]}")
         res = list(cur.fetchall())
-        print(i[0], res)
         try:
             cur_dict["thumbnail_image"] = "image_" + str(res[0][0]) + ".png"
         except:
