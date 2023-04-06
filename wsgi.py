@@ -1,1 +1,1 @@
-import app
+import flask_app
