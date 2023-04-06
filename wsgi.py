@@ -1,1 +1,4 @@
-import flask_app
+from small_test import app
+
+if __name__ == "__main__":
+    app.run()
