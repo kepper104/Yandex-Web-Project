@@ -88,14 +88,19 @@ def signin():
     user_login = form.username.data
     print("User login is", user_login)
     user_id = get_user_id(user_login)
+    error = """
+    Error, login or password didn't match
+    <form action="/signin">
+    <input type="submit" value="Return to sign in">
+    </form> """
     if user_id == -1:
-        return "Error, login or password didn't match"
+        return error
 
     hashed_password = get_hashed_user_password(user_id)
     cur_password = form.password.data
 
     if not check_password_hash(hashed_password, cur_password):
-        return "Error, login or password didn't match"
+        return error
 
     user = User()
     user.id = user_login
@@ -130,16 +135,13 @@ def post(post_id):
     return redirect(f"/post/{post_id}")
 
 
-
 @app.route('/make_post', methods=['GET', 'POST'])
 @flask_login.login_required
 def make_post():
     if request.method == "GET":
         return render_template("make_post.html")
     print(request.form)
-    print("FUCK")
     post_id = commit_post(request.form)
-    print("REDIRECTING")
     # return redirect(url_for("index"))
     screenshots_n = request.form["screenshots_number"]
     if screenshots_n == 0 or screenshots_n == "" or screenshots_n == " " or screenshots_n == "0":
@@ -170,6 +172,7 @@ def make_post_screenshots():
         # print(screen.read())
     return redirect(url_for("index"))
 
+
 @app.route('/logout')
 @flask_login.login_required
 def logout():
@@ -197,34 +200,40 @@ def get_post_data(post_id):
     params["description"] = post[3]
     params["text_tutorial"] = post[5]
     params["video_tutorial"] = post[6]
-    cur.execute(f"SELECT picture_id FROM pictures WHERE parent_post_id = {post_id}")
-    screenshots = list()
-    screenshots_numbers = list()
-    for index, i in enumerate(cur):
-        if index == 0:
-            first_screenshot = f"image_{i[0]}.png"
-        else:
-            screenshots_numbers.append(i[0])
-            screenshots.append(f"image_{i[0]}.png")
-    params["first_screenshot"] = first_screenshot
-    params["screenshots"] = screenshots
-    params["screenshots_numbers"] = screenshots_numbers
+    try:
+        cur.execute(f"SELECT picture_id FROM pictures WHERE parent_post_id = {post_id}")
+        screenshots = list()
+        screenshots_numbers = list()
+        for index, i in enumerate(cur):
+            if index == 0:
+                first_screenshot = f"image_{i[0]}.png"
+            else:
+                screenshots_numbers.append(i[0])
+                screenshots.append(f"image_{i[0]}.png")
+        params["first_screenshot"] = first_screenshot
+        params["screenshots"] = screenshots
+        params["screenshots_numbers"] = screenshots_numbers
+    except:
+        pass
 
     cur.execute(f"""SELECT * FROM comments WHERE parent_post_id = {post_id}""")
     comments = list()
     for index, i in enumerate(cur.fetchall()):
-        print("AAAAAAA:", i)
-        comment = dict()
-        author_id = i[2]
-        comment_text = i[3]
-        post_date = i[4]
-        cur.execute(f"SELECT name FROM users WHERE user_id = {author_id};")
-        res = cur.fetchall()[0][0]
-        comment["author_name"] = res
-        comment["comment_text"] = comment_text
-        comment["post_date"] = post_date
-        comments.append(comment)
-        print("Updated comments list:", comments)
+        try:
+            print("AAAAAAA:", i)
+            comment = dict()
+            author_id = i[2]
+            comment_text = i[3]
+            post_date = i[4]
+            cur.execute(f"SELECT name FROM users WHERE user_id = {author_id};")
+            res = cur.fetchall()[0][0]
+            comment["author_name"] = res
+            comment["comment_text"] = comment_text
+            comment["post_date"] = post_date
+            comments.append(comment)
+            print("Updated comments list:", comments)
+        except:
+            pass
     params["comments"] = comments
 
     return params
