@@ -20,7 +20,7 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 connection = connect(host="localhost", user=db_user, password=db_password, database="minecraft_repository")
-cur = connection.cursor()
+cur = connection.cursor(buffered=True)
 print("Connected to DB!")
 
 
