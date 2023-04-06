@@ -1,1 +1,1 @@
-import small_test
+import app
