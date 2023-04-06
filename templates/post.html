@@ -63,6 +63,7 @@
 <!--    </div>-->
 
     <h2>Comments</h2>
+    {% if current_user.is_authenticated %}
     <br>
     <div style="margin-left: 0">
         <form class="post_form" method="post">
@@ -72,6 +73,10 @@
             <input type="submit" value="Post Comment" style="margin-left: 0" />
         </form>
     </div>
+    {% else %}
+    <h3>Sign in to leave comments</h3>
+    {% endif %}
+
 
 
     <ul id="comment-list">
