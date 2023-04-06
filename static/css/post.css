@@ -55,15 +55,15 @@ div.post input[type="submit"]:hover {
 background-color: #006666;
 }
 
-div.post ul {
-list-style: none;
-margin: 0;
-padding: 0;
-}
+/*div.post ul {*/
+/*list-style: none;*/
+/*margin: 0;*/
+/*padding: 0;*/
+/*}*/
 
-.post li {
-margin-bottom: 10px;
-}
+/*.post li {*/
+/*margin-bottom: 10px;*/
+/*}*/
 
 iframe {
 display: block;
