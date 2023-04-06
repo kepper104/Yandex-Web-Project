@@ -212,7 +212,8 @@ def get_post_data(post_id):
 
     cur.execute(f"""SELECT * FROM comments WHERE parent_post_id = {post_id}""")
     comments = list()
-    for index, i in enumerate(cur):
+    for index, i in enumerate(cur.fetchall()):
+        print("AAAAAAA:", i)
         comment = dict()
         author_id = i[2]
         comment_text = i[3]
