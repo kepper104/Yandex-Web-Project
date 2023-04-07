@@ -266,7 +266,9 @@ def get_post_tile_data():
         try:
             cur_dict["thumbnail_image"] = "image_" + str(res[0][0]) + ".png"
         except:
-            cur_dict["thumbnail_image"] = "image_" + str(res[0]) + ".png"
+            cur_dict["thumbnail_image"] = "default_image.jpeg"
+            # cur_dict["thumbnail_image"] = "image_" + str(res[0]) + ".png"
+
 
         print("Thumbnail image:", cur_dict['thumbnail_image'])
         posts_dict["posts"].append(cur_dict)
